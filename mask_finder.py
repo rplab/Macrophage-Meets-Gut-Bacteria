@@ -23,11 +23,13 @@ from skimage.morphology import remove_small_objects, binary_erosion, binary_dila
 from scipy.ndimage import binary_fill_holes
 # ---------------------------------------------------------------------------
 
-image_slices_wanted = {"fish1": (147, 288),
-                       "fish2": (140, 305),
-                       "fish3": (155, 300),
-                       "fish4": (160, 270),
-                       "fish5": (150, 310)
+# The first and last 100 or so images definitely do not have 
+# intersection events, so we exclude them from analysis  
+image_slices_wanted = {"Fish1": (147, 288),
+                       "Fish2": (140, 305),
+                       "Fish3": (155, 300),
+                       "Fish4": (160, 270),
+                       "Fish5": (150, 310)
                       }
 
 
@@ -71,24 +73,45 @@ def load_images_and_find_masks(dirname):
 
 
 def main():
-    fish_number = input("Which fish are you working with? Type fish1, fish2, fish3, fish4, or fish5.    ")   
-    stack_indices = image_slices_wanted.get(fish_number)
+    fish_dir = glob("L:\Julia_10March\*")   # the parent directory that holds all the nested folders for the 5 fish
+    sort_nicely(fish_dir)
 
-    GFP_masks_array = load_images_and_find_masks("L:\Julia_10March\Fish2\Timepoint1\Pos1\zStack\GFP\*.tif")[stack_indices[0]:stack_indices[1]]  
-    RFP_masks_array = load_images_and_find_masks("L:\Julia_10March\Fish2\Timepoint1\Pos1\zStack\RFP\*.tif")[stack_indices[0]:stack_indices[1]]  
+    # Loop through each of the 5 fish
+    for fish in fish_dir:
+        if re.search('Fish[0-9]', fish):
+            timepoint_dir = glob(f"{fish}\*")
+            sort_nicely(timepoint_dir)
+            fish_number = re.search('Fish[0-9]', fish).group()       
+            stack_indices = image_slices_wanted.get(fish_number)
 
-    intersection_array = remove_small_objects(np.logical_and(GFP_masks_array, RFP_masks_array), 200, in_place=True)
+            # Loop through each of the 13 timepoints for each fish
+            for timepoint in timepoint_dir:
+                pos_dir = glob(f"{timepoint}\*")
+                sort_nicely(pos_dir)
+                timepoint_number = re.search('Timepoint[0-9]*', timepoint).group()
+                
+                # Loop through each of the the 4 positions for each fish
+                for pos in pos_dir:
+                    pos_number = re.search('Pos[0-9]', pos).group()
 
-    # Free unnecessary memory 
-    del GFP_masks_array
-    del RFP_masks_array
-    
-    np.savez_compressed("intersection_finder_output.npz", intersection_array)
+                    # Load images by passing the full path to the appropriate function 
+                    GFP_masks_array = (load_images_and_find_masks(f"{pos}\zStack\GFP\*.tif"))[stack_indices[0]:stack_indices[1]]  
+                    RFP_masks_array = (load_images_and_find_masks(f"{pos}\zStack\RFP\*.tif"))[stack_indices[0]:stack_indices[1]]  
+            
+                    intersection_array = remove_small_objects(np.logical_and(GFP_masks_array, RFP_masks_array), 200, in_place=True)
 
-    
+                    # Free unnecessary memory 
+                    del GFP_masks_array
+                    del RFP_masks_array
+                    
+                    np.savez_compressed(f"L:\Julia_10March\intersection_mask_arrays\intersection_mask_array_{fish_number}-{timepoint_number}-{pos_number}.npz", intersection_array)
+
+        
 
 
 if __name__ == '__main__':
     main()
+
+    
 
 
