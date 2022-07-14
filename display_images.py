@@ -12,6 +12,8 @@ intensity projection applied to a folder. Runtime for 1 fish / 1 pos /
 1 timepoint is 3 minutes. 
 """ 
 # ---------------------------------------------------------------------------
+import re
+import os
 import numpy as np
 from numpy import *
 from glob import glob
@@ -22,17 +24,14 @@ from image_operations import sort_nicely
 from skimage.measure import label, regionprops
 # ---------------------------------------------------------------------------
 
-image_slices_wanted = {"fish1": (147, 288),
-                       "fish2": (140, 305),
-                       "fish3": (155, 300),
-                       "fish4": (160, 270),
-                       "fish5": (150, 310)
+# The first and last 100 or so images definitely do not have 
+# intersection events, so we exclude them from analysis  
+image_slices_wanted = {"Fish1": (147, 288),
+                       "Fish2": (140, 305),
+                       "Fish3": (155, 300),
+                       "Fish4": (160, 270),
+                       "Fish5": (150, 310)
                       }
-
-
-fish_number = input("Which fish are you working with? Type fish1, fish2, fish3, fish4, or fish5.    ")   
-stack_indices = image_slices_wanted.get(fish_number)
-
 
 def load_intersection_array(npz_file):
     '''Loads a intersection array from a numpy compressed file.'''
@@ -40,7 +39,7 @@ def load_intersection_array(npz_file):
     return intersection_array
 
 
-def load_images(dirname):
+def load_images(dirname, stack_indices):
     '''Loads and reads the images of a directory into an array.'''
     file_lst = glob(dirname)
     sort_nicely(file_lst)
@@ -62,7 +61,7 @@ def get_bounding_box(array):
     return bboxes
     
 
-def show_subset_image(GFP_image_array, RFP_image_array, intersection_masks_array, intersection_bboxes):
+def show_subset_image(GFP_image_array, RFP_image_array, intersection_masks_array, intersection_bboxes, stack_indices, fish_number, timepoint, position):
     """ 
     Displays the maximum intensity projection of images slices with 
     intersection events using the bounding boxes of associated
@@ -110,24 +109,36 @@ def show_subset_image(GFP_image_array, RFP_image_array, intersection_masks_array
         axs[1, 1].xaxis.set_ticklabels([])
         axs[1, 1].yaxis.set_ticklabels([])
         axs[1, 1].tick_params(bottom=False)      
-        axs[1, 1].tick_params(left=False)  
+        axs[1, 1].tick_params(left=False)
+
+        if os.path.isdir(f"L:\Julia_10March\intersection_images\{fish_number}-{timepoint}-{position}"):
+            plt.savefig(f"L:\Julia_10March\intersection_images\{fish_number}-{timepoint}-{position}\image_{bbox[0]+stack_indices[0]}-{bbox[3]+1+stack_indices[0]}")     # Save images to the folder labeled with the image slices used in the projection
+            plt.close(fig)
+        else:
+            os.makedirs(f"L:\Julia_10March\intersection_images\{fish_number}-{timepoint}-{position}")   # Make a folder to store the images if it doesn't already exist
+            plt.savefig(f"L:\Julia_10March\intersection_images\{fish_number}-{timepoint}-{position}\image_{bbox[0]+stack_indices[0]}-{bbox[3]+1+stack_indices[0]}")   
+            plt.close(fig)
+       
         
-        plt.savefig(f"L:\Estelle_fish2_pos1_time1_images\image_{bbox[0]+stack_indices[0]}-{bbox[3]+1+stack_indices[0]}")          # Save images to a folder labeled with the image slices used in the projection
-        plt.close(fig)
 
 
 def main():
-    intersection_masks_array = load_intersection_array("intersection_finder_output.npz")
-   
-    GFP_image_array = load_images("L:\Julia_10March\Fish2\Timepoint1\Pos1\zStack\GFP\*.tif")
-    RFP_image_array = load_images("L:\Julia_10March\Fish2\Timepoint1\Pos1\zStack\RFP\*.tif")
+    for intersection_array in glob("L:\Julia_10March\intersection_mask_arrays\*"):
+        fish_number = re.search('Fish[0-9]', intersection_array).group()
+        timepoint = re.search('Timepoint[0-9]*', intersection_array).group()
+        position = re.search('Pos[0-9]', intersection_array).group()
+        stack_indices = image_slices_wanted[fish_number]
 
-    intersection_bboxes = get_bounding_box(intersection_masks_array)
+        intersection_masks_array = load_intersection_array(intersection_array)
+        GFP_image_array = load_images(f"L:\Julia_10March\{fish_number}\{timepoint}\{position}\zStack\GFP\*.tif", stack_indices)
+        RFP_image_array = load_images(f"L:\Julia_10March\{fish_number}\{timepoint}\{position}\zStack\RFP\*.tif", stack_indices)
+     
+        intersection_bboxes = get_bounding_box(intersection_masks_array)
 
-    show_subset_image(GFP_image_array, RFP_image_array, intersection_masks_array, intersection_bboxes)
-
+        show_subset_image(GFP_image_array, RFP_image_array, intersection_masks_array, intersection_bboxes, stack_indices, fish_number, timepoint, position)
 
 
 
 if __name__ == '__main__':
     main()
+
