@@ -25,7 +25,7 @@ from scipy.ndimage import binary_fill_holes
 
 # The first and last 100 or so images definitely do not have 
 # intersection events, so we exclude them from analysis  
-image_slices_wanted = {"Fish1": (147, 288),
+image_slices_wanted = {"Fish1": (130, 305),
                        "Fish2": (140, 305),
                        "Fish3": (155, 300),
                        "Fish4": (160, 270),
