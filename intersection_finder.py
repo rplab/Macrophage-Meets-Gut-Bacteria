@@ -201,21 +201,23 @@ def main():
 
                 if fish_number == 'Fish1':
                     if re.match("Timepoint[1-5]$", timepoint_number):
-                        pos_dir = glob(f"{timepoint_number}\*")
-
-
-                # elif fish_number == "Fish4":
-                #     if re.search("Timepoint[1-4]", timepoint_number):
-                #         pos_dir = glob(f"{timepoint_number}\*")
-
-                # elif fish_number == "Fish5":
-                #     if re.search("Timepoint[1-5]", timepoint_number):
-                #         pos_dir = glob(f"{timepoint_number}\*")
-                       
-                # else:
-                #     pos_dir = glob(f"{timepoint_number}\*")
+                        pos_dir = glob(f"{timepoint}\*")
                     
-                # sort_nicely(pos_dir)
+                elif fish_number == "Fish4":
+                    if re.match("Timepoint[1-4]$", timepoint_number):
+                        pos_dir = glob(f"{timepoint}\*")
+
+                elif fish_number == "Fish5":
+                    if re.match("Timepoint[1-5]$", timepoint_number):
+                        pos_dir = glob(f"{timepoint}\*")
+                        
+                       
+                else:
+                    pos_dir = glob(f"{timepoint_number}\*")
+                    
+                sort_nicely(pos_dir)
+
+                print(pos_dir)
 
                 # # Loop through each of the the 4 positions for each fish
                 # for pos in pos_dir:
@@ -239,6 +241,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
     
     
