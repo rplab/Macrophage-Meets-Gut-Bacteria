@@ -1,11 +1,14 @@
 # Macrophage-Meets-Gut-Bacteria
 Python code for image analysis of the intersection of macrophages and gut bacteria. 
 
+
+
 # Overarching Goals + Data Provided
 
 The code for this project aims to identify and save images of instances where macrophages are clearly engulfing bacteria (intersection events) in the lumen of in transgenic mpeg-mcherry fish. The data that's run through the program are .tiff images from the folder Julia10_March, which contains images for 5 different fish, each of which have 13 timepoints and 4 regions.  The data from Julia_10_March is further split up into two channels: RFP and GFP. The RFP channel contains macrophages whereas the GFP channel contains vibrio-z20. 
 
 The code for this program is split into two main Python files -- intersection_finder.py and display_intersection.py -- to make finding and saving intersections two distinct processes. An abbreivated summary for how both files work is provided below.
+
 
 
 # Important Notes 
