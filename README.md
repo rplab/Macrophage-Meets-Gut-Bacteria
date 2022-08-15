@@ -4,14 +4,14 @@ Python code for image analysis of the intersection of macrophages and gut bacter
 
 # Overarching Goals + Data Provided
 
-The code for this project aims to identify and save images of instances where macrophages are clearly engulfing bacteria (intersection events) in the lumen of in transgenic mpeg-mcherry fish. The data that's run through the program are .tiff images from the folder Julia10_March, which contains images for 5 different fish, each of which have 13 timepoints and 4 regions.  The data from Julia_10_March is further split up into two channels: RFP and GFP. The RFP channel contains macrophages whereas the GFP channel contains vibrio-z20. 
+The code for this project aims to identify and save images of instances where macrophages are clearly engulfing bacteria (intersection events) in the lumen of transgenic mpeg-mcherry fish. The data that's run through the program are .tiff images from the folder Julia10_March, which contains images for 5 different fish, each of which have 13 timepoints and 4 regions.  The data from Julia_10_March is further split up into two channels: RFP and GFP. The RFP channel contains macrophages whereas the GFP channel contains vibrio-z20. 
 
 The code for this program is split into two main Python files -- intersection_finder.py and display_intersection.py -- to make finding and saving intersections two distinct processes. An abbreivated summary for how both files work is provided below.
 
 
 # Important Notes 
 
-Please note that both intersection_finder.py and display_intersection.py only analyzs specific image slices and timepoints for all 5 fish in Julia10_March specified at the top of each file (also found at Timepoints & Z-Slices Used for Each Fish). Specific images slices are used because the fish is observed to have no clear intersection events for the first and last 100 or so images. Specific timepoints are used because the fish died prematurely during data collection, and we're not interested in analyzing data from an expired fish. For example, the image slices analyzed in Fish1 are slices 130-395 since it was clear by manual analysis that the first 130 and last 100 or so images didn't have any intersection events. Furthermore, only the first 5 timepoints are analyzed for Fish1 because Fish1 is dead from timepoints 5-13. 
+Please note that both intersection_finder.py and display_intersection.py only analyze specific image slices and timepoints for all 5 fish in Julia10_March specified at the top of each file (also found at Timepoints & Z-Slices Used for Each Fish). Specific images slices are used because the fish is observed to have no clear intersection events for the first and last 100 or so images. Specific timepoints are used because the fish died prematurely during data collection, and we're not interested in analyzing data from an expired fish. For example, the image slices analyzed in Fish1 are slices 130-395 since it was clear by manual analysis that the first 130 and last 100 or so images didn't have any intersection events. Furthermore, only the first 5 timepoints are analyzed for Fish1 because Fish1 is dead from timepoints 5-13. 
 
 
 # intersection_finder.py
