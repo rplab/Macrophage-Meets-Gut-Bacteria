@@ -22,11 +22,11 @@ intersection_finder.py loops through the data in Julia_10_March, applies appropr
 
 The majority of the work for identifying intersection events occurs in the main() function. main() loops through the data provided by Julia10_March in the following order: Fish, Timepoint, Pos (region). That means that the intersection mask arrays produced would be saved to the folder intersection_mask_arrays in the following order: Fish1-Timepoint1-Pos1, Fish1-Timepoint2-Pos1, Fish1-Timepoint3-Pos1, etc. (assuming that intersetions are found for these data). Regular expressions are utilzed to ensure that only desired image slices and timepoints are used for each fish (see section Important Notes above). For every fish, timepoint, and region, a GFP mask array and an RFP mask array is created. Then the resulting intersection mask array is produced by using the numpy logical_and function on the mask arrays for both channels. The intersection array is then saved to a numpy compressed file that's named with the appropriate fish number, timepoint number, and region number to which the original data came from (e.g Fish5-Timepoint12-Pos4). 
 
-## find_threshold():
+### find_threshold():
 
 find_threshold() takes a single 2D image slice and returns its corresponding threshod using the formula threshold = median(image_slice) + 3 * standard deviation(image_slice).
 
-## load_images_and_find_masks():
+### load_images_and_find_masks():
 
 load_images_and_find_masks() first takes the name of the directory that holds the data for 1 fish, 1 timepoint, 1 region and the range of image slices analyzed for the fish. Next, the function 
 
@@ -41,23 +41,23 @@ saves all of the resulting mask arays for the directory in a large 3D array
 
 display_intersection.py takes the numpy compressed files produced from intersection_finder.py, which are saved in the folder intersection_mask_arrays, displays the images using plots, and then saves them to a folder named intersection_images. 
 
-## main():
+### main():
 
 main() loops through each of the intersection arrays in the folder intersection_mask_arrays, obtaining the corresponding fish number, timepoint number, and region number using regular expressions. The appropriate intersection mask array and image arrays for both GFP and RFP channels are loaded. The intersection mask is passed to the get_bounding_box function to get the bounding box for each intersection image slice. The bounding box, intersection mask array, GFP image array, RFP image array, and other information about the specific fish, timepoint, and region is then passed to the show_subset_image function to display the intersection events and save them to the folder intersection_images. 
 
-## load_intersection_array():
+### load_intersection_array():
 
 load_intersection_array() takes in a numpy compressed file containing an array of intersection events and returns the corresponding loaded intersection mask array. 
 
-## load_images():
+### load_images():
 
 load_images() loads a directory of images for either the GFP or RFP channel and returns the appropriate array of images.
 
-## get_bounding_box():
+### get_bounding_box():
 
 The get_bounding_box function takes a loaded intersection mask array as input and returns a composite list of bounding boxes for each intersection image slice. The purpose of finding the bounding boxes of each intersection image slice is to provide a zoomed-in subplot of an intersection event in the show_subset_image function.
 
-## show_subset_image():
+### show_subset_image():
 
 show_subset_image takes in the following inputs:
 
@@ -78,9 +78,10 @@ The second type of subplot that's created is a zoomed-in image of the intersecti
 
 An example of an intersection image from Fish5-Timepoint3-Pos1 outputted from show_subset_image is show below. The top two images are subplots of the first type whereas the bottom two images are subplots of the second type. 
 
-image_340-349.png
 
-show_subset_image() stores the intersection images in the folder intersection_images so that each 1 Fish, 1 Timepoint, 1 Pos has its own folder. For example, if we wanted to find the intersection images for Fish5-Timepoint3-Pos1, we would navigate to the intersection_images folder, click on the Fish5-Timepoint3-Pos1 folder, and then view the images in the directory. 
+
+show_subset_image() stores the intersection images in the folder intersection_images so that each 1 Fish, 1 Timepoint, 1 Pos has its own folder. For example, if we wanted![image_384-428](https://user-images.githubusercontent.com/8672353/184722785-fa5b0cb1-8d52-41ab-a64c-12cf8a38d670.png)
+ to find the intersection images for Fish5-Timepoint3-Pos1, we would navigate to the intersection_images folder, click on the Fish5-Timepoint3-Pos1 folder, and then view the images in the directory. 
  
 
 Examples of Valid vs. Non-Valid Intersections 
