@@ -78,13 +78,12 @@ The second type of subplot that's created is a zoomed-in image of the intersecti
 
 An example of an intersection image from Fish5-Timepoint3-Pos1 outputted from show_subset_image is show below. The top two images are subplots of the first type whereas the bottom two images are subplots of the second type. 
 
+![image_264-275](https://user-images.githubusercontent.com/8672353/184722939-7445b74a-c4eb-4e39-a66b-80c47d393d9d.png)
 
-
-show_subset_image() stores the intersection images in the folder intersection_images so that each 1 Fish, 1 Timepoint, 1 Pos has its own folder. For example, if we wanted![image_384-428](https://user-images.githubusercontent.com/8672353/184722785-fa5b0cb1-8d52-41ab-a64c-12cf8a38d670.png)
- to find the intersection images for Fish5-Timepoint3-Pos1, we would navigate to the intersection_images folder, click on the Fish5-Timepoint3-Pos1 folder, and then view the images in the directory. 
+show_subset_image() stores the intersection images in the folder intersection_images so that each 1 Fish, 1 Timepoint, 1 Pos has its own folder. For example, if we wanted to find the intersection images for Fish5-Timepoint3-Pos1, we would navigate to the intersection_images folder, click on the Fish5-Timepoint3-Pos1 folder, and then view the images in the directory. 
  
 
-Examples of Valid vs. Non-Valid Intersections 
+# Examples of Valid vs. Non-Valid Intersections 
 
 Because intersection events are possible outside the lumen of transgenic mpeg-mcherry fish, a glance into any random folder inside intersection_images will often contain many intersections even though valid intersection events are rare. The number of total intersections in a folder can range from 12-70 images, with most containing 30-40 images. The number of valid intersections per folder average total around 2-3 intersections. Therefore, on average, users should expect approximately 5% of images in any given folder to contain valid intersections. Examples of both valid and non-valid intersections are provided below:
 
