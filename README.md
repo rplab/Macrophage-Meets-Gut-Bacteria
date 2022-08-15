@@ -87,17 +87,13 @@ show_subset_image() stores the intersection images in the folder intersection_im
 
 Because intersection events are possible outside the lumen of transgenic mpeg-mcherry fish, a glance into any random folder inside intersection_images will often contain many intersections even though valid intersection events are rare. The number of total intersections in a folder can range from 12-70 images, with most containing 30-40 images. The number of valid intersections per folder average total around 2-3 intersections. Therefore, on average, users should expect approximately 5% of images in any given folder to contain valid intersections. Examples of both valid and non-valid intersections are provided below:
 
+## VALID
+
 ![Fish1-Timepoint1-Pos1-Slice295](https://user-images.githubusercontent.com/8672353/184723057-515ffbea-c582-4ee4-84f2-d0162026c4d7.png)
 
 ![image_294-296](https://user-images.githubusercontent.com/8672353/184723085-b44f7cd3-0b06-44aa-b843-74414afe1d57.png)
 
-
-## VALID
-Fish1-Timepoint1-Pos1-Slice295.png
-
-image_294-296.png
-
-Reason for Validity: As shown by the topmost image, the intersection event is clearly inside the lumen of the zebrafish. Furthermore, the corresponding maximum intensity projection image produced by the program clearly captures the shape of two bacterial cells that were engulfed by the macrophage. 
+# Reason for Validity: As shown by the topmost image, the intersection event is clearly inside the lumen of the zebrafish. Furthermore, the corresponding maximum intensity projection image produced by the program clearly captures the shape of two bacterial cells that were engulfed by the macrophage. 
 
 
 ## NOT-VALID 
