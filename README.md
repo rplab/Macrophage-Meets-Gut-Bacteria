@@ -21,53 +21,53 @@ intersection_finder.py loops through the data in Julia_10_March, applies appropr
 
 The majority of the work for identifying intersection events occurs in the main() function. main() loops through the data provided by Julia10_March in the following order: Fish, Timepoint, Pos (region). That means that the intersection mask arrays produced would be saved to the folder intersection_mask_arrays in the following order: Fish1-Timepoint1-Pos1, Fish1-Timepoint2-Pos1, Fish1-Timepoint3-Pos1, etc. (assuming that intersetions are found for these data). Regular expressions are utilzed to ensure that only desired image slices and timepoints are used for each fish (see section Important Notes above). For every fish, timepoint, and region, a GFP mask array and an RFP mask array is created. Then the resulting intersection mask array is produced by using the numpy logical_and function on the mask arrays for both channels. The intersection array is then saved to a numpy compressed file that's named with the appropriate fish number, timepoint number, and region number to which the original data came from (e.g Fish5-Timepoint12-Pos4). 
 
-find_threshold():
+## find_threshold():
 
 find_threshold() takes a single 2D image slice and returns its corresponding threshod using the formula threshold = median(image_slice) + 3 * standard deviation(image_slice).
 
-load_images_and_find_masks():
+## load_images_and_find_masks():
 
 load_images_and_find_masks() first takes the name of the directory that holds the data for 1 fish, 1 timepoint, 1 region and the range of image slices analyzed for the fish. Next, the function 
 
-reads each image slice in the directory
-removes unncessary objects from the image using thresholding via the find_threshold() function
-removes small objects from the image using the remove_small_objects function from the skimage.morphology module
-fills any holes in the mask being produced using the binary_fill_holes function from the scipy.ndimage module
+1. reads each image slice in the directory
+2. removes unncessary objects from the image using thresholding via the find_threshold() function
+3. removes small objects from the image using the remove_small_objects function from the skimage.morphology module
+4. fills any holes in the mask being produced using the binary_fill_holes function from the scipy.ndimage module
 saves all of the resulting mask arays for the directory in a large 3D array
 
 
-display_intersection.py
+# display_intersection.py
 
 display_intersection.py takes the numpy compressed files produced from intersection_finder.py, which are saved in the folder intersection_mask_arrays, displays the images using plots, and then saves them to a folder named intersection_images. 
 
-main():
+## main():
 
 main() loops through each of the intersection arrays in the folder intersection_mask_arrays, obtaining the corresponding fish number, timepoint number, and region number using regular expressions. The appropriate intersection mask array and image arrays for both GFP and RFP channels are loaded. The intersection mask is passed to the get_bounding_box function to get the bounding box for each intersection image slice. The bounding box, intersection mask array, GFP image array, RFP image array, and other information about the specific fish, timepoint, and region is then passed to the show_subset_image function to display the intersection events and save them to the folder intersection_images. 
 
-load_intersection_array():
+## load_intersection_array():
 
 load_intersection_array() takes in a numpy compressed file containing an array of intersection events and returns the corresponding loaded intersection mask array. 
 
-load_images():
+## load_images():
 
 load_images() loads a directory of images for either the GFP or RFP channel and returns the appropriate array of images.
 
-get_bounding_box():
+## get_bounding_box():
 
 The get_bounding_box function takes a loaded intersection mask array as input and returns a composite list of bounding boxes for each intersection image slice. The purpose of finding the bounding boxes of each intersection image slice is to provide a zoomed-in subplot of an intersection event in the show_subset_image function.
 
-show_subset_image():
+## show_subset_image():
 
 show_subset_image takes in the following inputs:
 
-GFP_image_array: An array of images from a GFP channel
-RFP_image_array: An array of images from a RFP channel
-intersection_masks_array: An array of intersection masks
-intersection_bboxes: A list of intersection bounding boxes for the corresponding 1 Fish, 1 Timepoint, 1 Pos
-stack_indices: The desired image slices for the fish
-fish_number
-timepoint
-position (aka region)
+- GFP_image_array: An array of images from a GFP channel
+- RFP_image_array: An array of images from a RFP channel
+- intersection_masks_array: An array of intersection masks
+- intersection_bboxes: A list of intersection bounding boxes for the corresponding 1 Fish, 1 Timepoint, 1 Pos
+- stack_indices: The desired image slices for the fish
+- fish_number
+- timepoint
+- position (aka region)
 
 For each of the bounding boxes in intersection_bboxes,  show_subset_image() calculates the maximum intensity projection of GFP_image_array, RFP_image_array, and intersection_masks_array along the z axis using the z-coordinates of each bounding box. Next, a 2x2 subplot is created, consisting of two types of subplots per channel. 
 
@@ -87,7 +87,7 @@ Examples of Valid vs. Non-Valid Intersections
 Because intersection events are possible outside the lumen of transgenic mpeg-mcherry fish, a glance into any random folder inside intersection_images will often contain many intersections even though valid intersection events are rare. The number of total intersections in a folder can range from 12-70 images, with most containing 30-40 images. The number of valid intersections per folder average total around 2-3 intersections. Therefore, on average, users should expect approximately 5% of images in any given folder to contain valid intersections. Examples of both valid and non-valid intersections are provided below:
 
 
-VALID
+## VALID
 Fish1-Timepoint1-Pos1-Slice295.png
 
 image_294-296.png
@@ -95,7 +95,7 @@ image_294-296.png
 Reason for Validity: As shown by the topmost image, the intersection event is clearly inside the lumen of the zebrafish. Furthermore, the corresponding maximum intensity projection image produced by the program clearly captures the shape of two bacterial cells that were engulfed by the macrophage. 
 
 
-NOT-VALID 
+## NOT-VALID 
 
 
 Example_outside_fish(not analyzed)-Fish4-Timepoint3-Pos1.png
