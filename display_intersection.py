@@ -121,7 +121,6 @@ def show_subset_image(GFP_image_array, RFP_image_array, intersection_masks_array
        
         
 
-
 def main():
     for intersection_array in glob("L:\Julia_10March\intersection_mask_arrays\*"):
         fish_number = re.search('Fish[0-9]', intersection_array).group()
