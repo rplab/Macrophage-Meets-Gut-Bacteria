@@ -93,14 +93,14 @@ Because intersection events are possible outside the lumen of transgenic mpeg-mc
 
 ![image_294-296](https://user-images.githubusercontent.com/8672353/184723085-b44f7cd3-0b06-44aa-b843-74414afe1d57.png)
 
-# Reason for Validity: As shown by the topmost image, the intersection event is clearly inside the lumen of the zebrafish. Furthermore, the corresponding maximum intensity projection image produced by the program clearly captures the shape of two bacterial cells that were engulfed by the macrophage. 
+Reason for Validity: As shown by the topmost image, the intersection event is clearly inside the lumen of the zebrafish. Furthermore, the corresponding maximum intensity projection image produced by the program clearly captures the shape of two bacterial cells that were engulfed by the macrophage. 
 
 
 ## NOT-VALID 
 
-
-Example_outside_fish(not analyzed)-Fish4-Timepoint3-Pos1.png
+![Example_outside_fish(not analyzed)-Fish4-Timepoint3-Pos1](https://user-images.githubusercontent.com/8672353/184723237-f0a8aef4-00fa-40c3-ab5a-ae4dc0227542.png)
 
 Reason for Non-Validity: The macrophage depicted in the image above is outside the lumen and is merely engulfing autofloursecent cells. We know that the green specks in this image are not "real" bacterial cells because no aggregation is observed, which makes them autofluorescent cells. 
 
 
+Many thanks to Deepika and Raghu for guiding me through this project!
