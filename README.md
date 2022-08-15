@@ -2,13 +2,11 @@
 Python code for image analysis of the intersection of macrophages and gut bacteria. 
 
 
-
 # Overarching Goals + Data Provided
 
 The code for this project aims to identify and save images of instances where macrophages are clearly engulfing bacteria (intersection events) in the lumen of in transgenic mpeg-mcherry fish. The data that's run through the program are .tiff images from the folder Julia10_March, which contains images for 5 different fish, each of which have 13 timepoints and 4 regions.  The data from Julia_10_March is further split up into two channels: RFP and GFP. The RFP channel contains macrophages whereas the GFP channel contains vibrio-z20. 
 
 The code for this program is split into two main Python files -- intersection_finder.py and display_intersection.py -- to make finding and saving intersections two distinct processes. An abbreivated summary for how both files work is provided below.
-
 
 
 # Important Notes 
@@ -20,7 +18,7 @@ Please note that both intersection_finder.py and display_intersection.py only an
 
 intersection_finder.py loops through the data in Julia_10_March, applies appropriate thresholding criteria and filtering operations to the images, then creates and saves the resulting intersection mask arrays to a numpy compressed file if intersections are found. If no intersections are found for the specific fish, timepoint, and region, no intersection mask is created and the program skips to the next set of data. An intersection mask is produced for every 1 fish per 1 timepoint per 1 region and is saved to the folder intersection_mask_arrays, which is located in the same directory as the Julia10_March data folder. 
 
-## main():
+### main():
 
 The majority of the work for identifying intersection events occurs in the main() function. main() loops through the data provided by Julia10_March in the following order: Fish, Timepoint, Pos (region). That means that the intersection mask arrays produced would be saved to the folder intersection_mask_arrays in the following order: Fish1-Timepoint1-Pos1, Fish1-Timepoint2-Pos1, Fish1-Timepoint3-Pos1, etc. (assuming that intersetions are found for these data). Regular expressions are utilzed to ensure that only desired image slices and timepoints are used for each fish (see section Important Notes above). For every fish, timepoint, and region, a GFP mask array and an RFP mask array is created. Then the resulting intersection mask array is produced by using the numpy logical_and function on the mask arrays for both channels. The intersection array is then saved to a numpy compressed file that's named with the appropriate fish number, timepoint number, and region number to which the original data came from (e.g Fish5-Timepoint12-Pos4). 
 
